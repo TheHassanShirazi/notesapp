@@ -1,14 +1,30 @@
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import { useState } from 'react';
+import axios from 'axios'; // or use 'fetch'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={reactLogo} className="logo react" alt="React logo" />
+  const [output, setOutput] = useState('');
+  const [error, setError] = useState('');
 
-        <h1>Hello from Amplify</h1>
-      </header>
+  const runPythonScript = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/run-script').then(function (response) {
+        console.log(response);  
+      });
+      setOutput(response);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={runPythonScript}>Run Python Script</button>
+      <div>
+        <h3>Output:</h3>
+        <pre>{output}</pre>
+        <h3>Error:</h3>
+        <pre>{error}</pre>
+      </div>
     </div>
   );
 }
