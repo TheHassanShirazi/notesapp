@@ -8,9 +8,8 @@ function App() {
   const runPythonScript = async () => {
     try {
       const response = await axios.get('http://localhost:5000/run-script').then(function (response) {
-        console.log(response);  
+        setOutput(response.data);
       });
-      setOutput(response);
     } catch (err) {
       setError(err.message);
     }
